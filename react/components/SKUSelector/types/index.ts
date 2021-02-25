@@ -1,4 +1,4 @@
-export type InitialSelectionType = 'complete' | 'image' | 'empty'
+export type InitialSelectionType = 'complete' | 'image' | 'unique' | 'empty'
 
 export type DisplayMode = 'select' | 'default' | 'slider'
 

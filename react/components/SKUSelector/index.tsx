@@ -72,6 +72,19 @@ const selectedVariationFromItem = (
 
   return result
 }
+const selectedUniqueVariationFromItem = (
+  item: SelectorProductItem,
+  variations: Variations
+) => {
+  const variationNames = Object.keys(variations)
+  const result = {} as Record<string, string|null>
+
+  for (const variationName of variationNames) {
+    result[variationName] = variations[variationName].values.length === 1? item.variationValues[variationName]: null;
+  }
+
+  return result
+}
 
 function filterColorImages(
   items: SelectorProductItem[],
@@ -202,9 +215,12 @@ const getNewSelectedVariations = (
 
   const hasSkuInQuery = Boolean(query?.skuId)
   const parsedSku = parseSku(skuSelected)
-
+  
   if (hasSkuInQuery || initialSelection === 'complete') {
     return selectedVariationFromItem(parsedSku, variations)
+  }
+  if (initialSelection === 'unique') {
+    return selectedUniqueVariationFromItem(parsedSku, variations)
   }
 
   if (initialSelection === 'image') {
